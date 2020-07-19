@@ -5,10 +5,15 @@
 |사용 commend
 
 #subscription-manager register --username=hyg6565 --password=Hong7828@@
+
 #subscription-manager refresh
+
 #subscription-manager list --available --matches '*OpenShift*'
+
 #subscription-manager attach --pool=8a85f99c707807c801709f913ded7153
+
 #yum install openshift-ansible openshift-clients jq
+
 #subscription-manager repos     \
    
    --enable="rhel-7-server-rpms"      \
@@ -20,7 +25,9 @@
   --enable="rhel-7-server-ose-4.3-rpms"
 
 #yum install openshift-ansible openshift-clients jq
+
 #subscription-manager list
+
 #subscription-manager status
 
 
