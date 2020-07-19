@@ -3,16 +3,22 @@
 
 ------
 |사용 commend
+
 #subscription-manager register --username=hyg6565 --password=Hong7828@@
 #subscription-manager refresh
 #subscription-manager list --available --matches '*OpenShift*'
 #subscription-manager attach --pool=8a85f99c707807c801709f913ded7153
 #yum install openshift-ansible openshift-clients jq
 #subscription-manager repos     \
-    --enable="rhel-7-server-rpms"      \
-    --enable="rhel-7-server-extras-rpms"      \
-    --enable="rhel-7-server-ansible-2.8-rpms"      \
-    --enable="rhel-7-server-ose-4.3-rpms"
+   
+   --enable="rhel-7-server-rpms"      \
+   
+   --enable="rhel-7-server-extras-rpms"      \
+   
+   --enable="rhel-7-server-ansible-2.8-rpms"      \
+  
+  --enable="rhel-7-server-ose-4.3-rpms"
+
 #yum install openshift-ansible openshift-clients jq
 #subscription-manager list
 #subscription-manager status
@@ -20,9 +26,11 @@
 
 
 #subscription-manager list --available --matches '*OpenShift*'
+
 "*OpenShift*" 표현식에 일치하는 사용 가능한 서브스크립션 풀을 찾을 수 없습니다.
 
 /subscription-manager list --available --matches '*OpenShift*' 작업 중 오류
+
 "*OpenShift*" 표현식과 일치하는 사용 가능한 구독 풀을 찾을 수 없습니다. 라는 문구 가 뜸
 
 ## 작업 환경 변경
@@ -33,8 +41,9 @@
 -----
 
 ## yum repo 작성
-
+-----
 #vi /etc/yum.repos.d/ocp4-4.repo 
+
 [rhel-7-server-rpms]
 name=rhel-7-server-rpms
 baseurl=ftp:// 10.0.10.222/pub/repos/rhel-7-server-rpms
@@ -68,6 +77,7 @@ gpgcheck=0
 - 위의 내용을 구성한 ‘ocp4-4.repo” 파일 생성
 - 테스트: # yum update   >> 성공 
 -----
+
 ## yum repo 작업 내용
 ------
 - [base]
@@ -112,41 +122,7 @@ firewall-cmd --permanent --zone=external --add-port=5000/tcp
 
 /// 방화벽 대몬 재실행
 #firewall-cmd –reload 
-
-
-### 방화벽 개념
-[사용 명령어]
-firewall-cmd --permanent --zone=external --add-port=80/tcp
-firewall-cmd --permanent --zone=external --add-port=443/tcp
-firewall-cmd --permanent --zone=external --add-port=5000/tcp
-
-## internal zone firewall
-firewall-cmd --permanent --zone=internal --add-service=ftp
-firewall-cmd --permanent --zone=internal --add-service=dns
-firewall-cmd --permanent --zone=internal --add-service=tftp
-firewall-cmd --permanent --zone=internal --add-service=ssh
-firewall-cmd --permanent --zone=internal --add-service=dhcp
-firewall-cmd --permanent --zone=internal --add-service=proxy-dhcp
-
-firewall-cmd --permanent --zone=internal --add-port=53/tcp
-firewall-cmd --permanent --zone=internal --add-port=80/tcp
-firewall-cmd --permanent --zone=internal --add-port=443/tcp
-firewall-cmd --permanent --zone=internal --add-port=6443/tcp
-firewall-cmd --permanent --zone=internal --add-port=8443/tcp
-firewall-cmd --permanent --zone=internal --add-port=10256/tcp
-firewall-cmd --permanent --zone=internal --add-port=2379-2380/tcp
-firewall-cmd --permanent --zone=internal --add-port=9000-9999/tcp
-firewall-cmd --permanent --zone=internal --add-port=10249-10259/tcp
-firewall-cmd --permanent --zone=internal --add-port=22623/tcp
-firewall-cmd --permanent --zone=internal --add-port=5000/tcp
-
-firewall-cmd --permanent --zone=internal --add-port=53/udp
-firewall-cmd --permanent --zone=internal --add-port=4789/udp
-firewall-cmd --permanent --zone=internal --add-port=6081/udp
-firewall-cmd --permanent --zone=internal --add-port=9000-9999/udp
-firewall-cmd --permanent --zone=internal --add-port=30000-32767/udp
-
-firewall-cmd –reload 
+-----
 
 ###방화벽 개념 정리
 -----
@@ -164,12 +140,12 @@ firewall-cmd --list-al   사용가능한 서비스/포트 목록 출력
 -----
 
 ## 계정추가
-
+-----
 Core 계정 생성
 #Useradd core passwd core
 
 / coreos 설치시 core 의 계정이 파일에 접근 하기에 파일 계정 추가 필요
-
+-----
 
 ## FTP 설치 진행 
 -----
