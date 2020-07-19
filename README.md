@@ -45,7 +45,8 @@
 ## 작업 환경 변경
 ```
 - 작업 구성을 10.0.10.222(라처송 과장님 의 registry 노드 접속)
-- 현재 registry 노드 에 존재하는 팻키지 = podman, openshift-client, httpd-tools, mirror-registry, FTP
+- 현재 registry 노드 에 존재하는 팻키지 = podman, openshift-client,
+  httpd-tools, mirror-registry, FTP
 - 접속을 위해 registry 노드 의 접속 허용 작업 실핼
 ```
 
