@@ -40,6 +40,7 @@
 /subscription-manager list --available --matches '*OpenShift*' 작업 중 오류
 
 "*OpenShift*" 표현식과 일치하는 사용 가능한 구독 풀을 찾을 수 없습니다. 라는 문구 가 뜸
+```
 
 ## 작업 환경 변경
 ```
