@@ -174,10 +174,223 @@ FTP 설치 running 작업 및 상태 확인
 >>> 과장님의 Registry 노드에 접속 확인
 ```
 
- 
+## haproxy 설치
+```
+#yum install haproxy -y
+#setsebool -P haproxy_connect_any 1 /// selenux 에서 haproxy 의 접속 을 허용
+
+##vi /etc/haproxy/haproxy.cfg 내용 변경
+
+*** 아래의 문구를 붙여 넣었습니다. ***
+
+balancing for OCP Kubernetes API Server
+##
+frontend openshift-api-server
+    bind *:6443
+    default_backend openshift-api-server
+    mode tcp
+    option tcplog
+
+backend openshift-api-server
+    balance source
+    mode tcp
+    server bootstrap 10.0.10.224:6443 check
+    server master1 10.0.10.227:6443 check
+##
+# balancing for OCP Machine Config Server
+##
+frontend machine-config-server
+    bind *:22623
+    default_backend machine-config-server
+    mode tcp
+    option tcplog
+
+backend machine-config-server
+    balance source
+    mode tcp
+    server bootstrap 10.0.10.224:22623 check
+    server master1 10.0.10.227:22623 check
+
+##
+# balancing for OCP Ingress Insecure Port & Admin Page
+##
+frontend ingress-http
+    bind *:80
+    default_backend ingress-http
+    mode tcp
+    option tcplog
+
+backend ingress-http
+    balance source
+    mode tcp
+    server worker1 10.0.10.228:80 check
+
+##
+# balancing for OCP Ingress Secure Port
+##
+frontend ingress-https
+    bind *:443
+    default_backend ingress-https
+    mode tcp
+    option tcplog
+
+backend ingress-https
+    balance leastconn
+#    balance source
+    mode tcp
+    server worker1 10.0.10.228:443 check
+
+#---------------------------------------------------------------------
+# static backend for serving up images, stylesheets and such
+#---------------------------------------------------------------------
+backend static
+    balance     roundrobin
+    server      static 127.0.0.1:4331 check
+
+#---------------------------------------------------------------------
+# round robin balancing between the various backends
+#---------------------------------------------------------------------
+backend app
+    balance     roundrobin
+    server  app1 127.0.0.1:5001 check
+    server  app2 127.0.0.1:5002 check
+    server  app3 127.0.0.1:5003 check
+    server  app4 127.0.0.1:5004 check
+
+----------------------------------------------- 
+bastion ip : 10.0.10.224
+ bootstrap ip : 10.0.10.226
+ master01 ip : 10.0.10.227
+ worker1 ip : 10.0.10.228
+
+```
+## DNS 구성
+
+```
+dns 구성 정보
+-----------------------
+bastion ip : 10.0.10.224 
+bootstrap ip : 10.0.10.226 
+master01 ip : 10.0.10.227 
+worker1 ip : 10.0.10.228
+FQDN : opc4-1.fu.te
+-----------------------
+```
+## bind install
+```
+#yum install bind
+
+```
+```
+# vi /etc/named.conf <= replace
+options {
+        listen-on port 53 { ANY; };     => port 53 을 listen 으로 상태 변경
+        listen-on-v6 port 53 { ANY; };  => port 53 에 ipv6 사용을 허용
+        directory       "/var/named";
+        dump-file       "/var/named/data/cache_dump.db";
+        statistics-file "/var/named/data/named_stats.txt";
+        memstatistics-file "/var/named/data/named_mem_stats.txt";
+        recursing-file  "/var/named/data/named.recursing";
+        secroots-file   "/var/named/data/named.secroots";
+        allow-query     { ANY; };       => query값 localhost 를 허용으로 변경
+
+#  vi /etc/named.rfc1912.zones  <= append
+zone "ocp4-1.fu.te" IN {
+        type master;
+        file "ocp4-1.fu.te.zone";
+        allow-update { none; };
+};
+
+zone "10.0.10.in-addr.arpa" IN {
+        type master;
+        file "ocp4-1.fu.te.rr";
+        allow-update { none; };
+};
+
+*** zone 일 구성 정보 *** 
+vi /var/named/ocp4-1.fu.te.zone
+
+$TTL 60
+@       IN SOA  dns.ocp4-1.fu.te. root.ocp4-1.fu.te. (
+                                        1       ; serial
+                                        1D      ; refresh
+                                        1H      ; retry
+                                        1W      ; expire
+                                        3H )    ; minimum
+                IN      NS      ns.ocp4-1.fu.te.;
+                IN      A       10.0.10.1;
+ns              IN      A       10.0.10.1;
+bastion         IN      A       10.0.10.224;
+;
+bootstrap       IN      A       10.0.10.226;
+;
+master01        IN      A       10.0.10.227;
+;
+worker01        IN      A       10.0.10.228;
+;
+api             IN      A       10.0.10.224;
+;
+api-int         IN      A       10.0.10.224;
+;
+etcd-0          IN      A       10.0.10.227;
+;
+*.apps          IN      A       10.0.10.1;
+;
+_etcd-server-ssl._tcp. ocp4-1. fu.te.  86400 IN    SRV 0        10     2380 etcd-0. ocp4-1. fu.te
+
+```
+
+## named.rr 파일 구성
+```
+# vi /var/named/ocp4-1.fu.te.rr
+$TTL 20
+@       IN      SOA     ns.ocp4-1.fu.te.   root (
+                        2019070700      ; serial
+                        3H              ; refresh (3 hours)
+                        30M             ; retry (30 minutes)
+                        2W              ; expiry (2 weeks)
+                        1W )            ; minimum (1 week)
+        IN      NS      ns.ocp4-1.fu.te.
+;
+;
+101      IN      PTR     master01.ocp4-1.fu.te.
+;
+10      IN      PTR     bootstrap.ocp4-1.fu.te.
+;
+1      IN      PTR     api.ocp4.ocp4-1.fu.te.
+1      IN      PTR     api-int.ocp4-1.fu.te.
+;
+201      IN      PTR     worker01.ocp4-1.fu.te.
+
+```
+## named 데몬 실행 확인
+```
+#systemctl start named
+#systemctl enable named
+#systemctl status named
 
 
+--------
 
+##DSN 작업 이슈
 
+#systemctl status named
+● named.service - Berkeley Internet Name Domain (DNS)
+   Loaded: loaded (/usr/lib/systemd/system/named.service; disabled; vendor preset: disabled)
+   Active: failed (Result: exit-code) since 금 2020-07-17 00:20:02 KST; 3 days ago
 
+ 7월 17 00:20:02 bastion bash[5028]: ocp4-1.fu.te.zone:27: unknown RR type 'ocp4-1.'
+ 7월 17 00:20:02 bastion bash[5028]: zone ocp4-1.fu.te/IN: loading from master file ocp4-1.fu.te.zone failed: unknown class/type
+ 7월 17 00:20:02 bastion bash[5028]: zone ocp4-1.fu.te/IN: not loaded due to errors.
+ 7월 17 00:20:02 bastion bash[5028]: _default/ocp4-1.fu.te/IN: unknown class/type
+ 7월 17 00:20:02 bastion bash[5028]: zone 10.0.10.in-addr.arpa/IN: loaded serial 2019070700
+ 7월 17 00:20:02 bastion systemd[1]: named.service: control process exited, code=exited status=1
+ 7월 17 00:20:02 bastion systemd[1]: Failed to start Berkeley Internet Name Domain (DNS).
+ 7월 17 00:20:02 bastion systemd[1]: Unit named.service entered failed state.
+ 7월 17 00:20:02 bastion systemd[1]: named.service failed.
+ 7월 19 03:40:02 bastion.ocp4-1.fu.te systemd[1]: Unit named.service cannot be reloaded because it is inactive.
 
+작업 상태 확인중 "Failed to start Berkeley Internet Name Domain (DNS)."
+오류 발생
+
+```
