@@ -92,7 +92,8 @@ gpgcheck=0
 ```
 - [base]
 - Name    >> 저장소 표시이름, 위에선 저장소 이름표시를 rhel-7-server-rpm 으로 설정
-- Basurl    >> 저장소 주소이다, 위에서는 register속 ftp:// 10.0.10.222/pub/repos/rhel-7-server-rpms 에 저장된 내용을 가져온다.
+- Basurl    >> 저장소 주소이다, 위에서는 register속 
+  ftp:// 10.0.10.222/pub/repos/rhel-7-server-rpms 에 저장된 내용을 가져온다.
 - Enable    >> 활성화 여부 (0 =NO 1 =YES)
 - gpgcheck   >> 서명키 사용 여부 (0 =NO 1 =YES)
 ```
