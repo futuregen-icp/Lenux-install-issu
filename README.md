@@ -31,7 +31,7 @@
 #subscription-manager status
 
 
-
+*** 작업 이슈 ***
 #subscription-manager list --available --matches '*OpenShift*'
 
 "*OpenShift*" 표현식에 일치하는 사용 가능한 서브스크립션 풀을 찾을 수 없습니다.
