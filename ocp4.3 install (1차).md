@@ -374,7 +374,7 @@ $TTL 20
 
 ```
 
-##DSN 작업 이슈
+## DSN 작업 이슈
 ```
 #systemctl status named
 ● named.service - Berkeley Internet Name Domain (DNS)
@@ -411,7 +411,7 @@ _etcd-server-ssl._tcp.ocp4-1.fu.te.  86400 IN    SRV 0        10     2380 etcd-0
 ```
 
 
-##firewall 의 설정의 문제 
+## firewall 의 설정의 문제 
 ```
 위의 firewall-cmd 의 명령어를 전부 복붙해버리면서 문제 발생
 
@@ -440,7 +440,7 @@ _etcd-server-ssl._tcp.ocp4-1.fu.te.  86400 IN    SRV 0        10     2380 etcd-0
 ```
 
 
-##bootstrap-install 
+## bootstrap-install 
 ```
 coreos=inst
 coreos.inst.install_dev-sda 
@@ -449,7 +449,7 @@ coreos.inst.ignition_url=ftp://10.0.xxx.xxx/pub/bootstrap.ign
 ip=10.0.xxx.xxx::10.0.xxx.1:ocp4-3.fu.te:ens192:none nameserver=10.0.xxx.xxx
 ```
 
-##master-install
+## master-install
 ```
 
 coreos=inst
