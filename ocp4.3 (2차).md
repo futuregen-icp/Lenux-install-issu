@@ -92,7 +92,7 @@ gpgcheck=0
 #firewall-cmd --permanent --zone=external --add-port=443/tcp
 
 ```
-
+```
 ## internal zone firewall
 #firewall-cmd --permanent --zone=internal --add-service=ftp
 #firewall-cmd --permanent --zone=internal --add-service=dns
