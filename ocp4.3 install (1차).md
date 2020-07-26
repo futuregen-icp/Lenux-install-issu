@@ -372,10 +372,10 @@ $TTL 20
 #systemctl status named
 
 
---------
+```
 
 ##DSN 작업 이슈
-
+```
 #systemctl status named
 ● named.service - Berkeley Internet Name Domain (DNS)
    Loaded: loaded (/usr/lib/systemd/system/named.service; disabled; vendor preset: disabled)
@@ -408,9 +408,9 @@ _etcd-server-ssl._tcp.<cluster_name>.<base_domain>.  86400 IN    SRV 0        10
 _etcd-server-ssl._tcp.ocp4-1.fu.te.  86400 IN    SRV 0        10     2380 etcd-0.ocp4-1.fu.te 
 
 -해결 완료
------
+```
 
------
+```
 ##firewall 의 설정의 문제 
 
 위의 firewall-cmd 의 명령어를 전부 복붙해버리면서 문제 발생
@@ -437,27 +437,25 @@ _etcd-server-ssl._tcp.ocp4-1.fu.te.  86400 IN    SRV 0        10     2380 etcd-0
 #sudo firewall-cmd  --list-all-zones
 
 -작업 이후 zone=trust 를 보안상 이유로 internal 로 변경
------
+```
 
 
 ##bootstrap-install 
------
+```
 coreos=inst
 coreos.inst.install_dev-sda 
 coreos.inst.image_url=ftp://10.0.xxx.xxx/pub/rhcos4-3-3.raw.gz
 coreos.inst.ignition_url=ftp://10.0.xxx.xxx/pub/bootstrap.ign
 ip=10.0.xxx.xxx::10.0.xxx.1:ocp4-3.fu.te:ens192:none nameserver=10.0.xxx.xxx
--------
+```
 
 ##master-install
--------
+```
 
-##bootstrap-install 
------
 coreos=inst
 coreos.inst.install_dev-sda 
 coreos.inst.image_url=ftp://10.0.xxx.xxx/pub/rhcos4-3-3.raw.gz
 coreos.inst.ignition_url=ftp://10.0.xxx.xxx/pub/master01.ign
 ip=10.0.xxx.xxx::10.0.xxx.1:ocp4-3.fu.te:ens192:none nameserver=10.0.xxx.xxx
------
+```
 
