@@ -394,3 +394,70 @@ $TTL 20
 
 작업 상태 확인중 "Failed to start Berkeley Internet Name Domain (DNS)."
 오류 발생
+
+- 문제 해결
+_etcd-server-ssl._tcp. ocp4-1. fu.te.  86400 IN    SRV 0        10     2380 etcd-0. ocp4-1. fu.te  // 문제 발생
+
+- doce.openshift manual 에서의 명령어 
+_service._proto.name.                            TTL    class SRV priority weight port target.
+_etcd-server-ssl._tcp.<cluster_name>.<base_domain>.  86400 IN    SRV 0        10     2380 etcd-0.<cluster_name>.<base_domain>
+_etcd-server-ssl._tcp.<cluster_name>.<base_domain>.  86400 IN    SRV 0        10     2380 etcd-1.<cluster_name>.<base_domain>
+_etcd-server-ssl._tcp.<cluster_name>.<base_domain>.  86400 IN    SRV 0        10     2380 etcd-2.<cluster_name>.<base_domain>
+
+- 수정후
+_etcd-server-ssl._tcp.ocp4-1.fu.te.  86400 IN    SRV 0        10     2380 etcd-0.ocp4-1.fu.te 
+
+-해결 완료
+-----
+
+-----
+##firewall 의 설정의 문제 
+
+위의 firewall-cmd 의 명령어를 전부 복붙해버리면서 문제 발생
+
+1.현재 작업 중 필요한 firewall service 는 FTP,DNS,Haproxy 이다 위의 모든 설정을 다 구성X 
+2.defult 의 위치가 public 으로 되어 있었음 타겟을 trust(보안상의 이유로X), Internal 로 구성(내부망에서 구동되면 된다) 
+3.crul commend 가 bastion 에서 구동이 되지만 coreos install 중인 bootstrap에서 사용되지 못함, 
+
+- 오류 수정
+#firewall-cmd --list-all
+#firewall-cmd --list-all-zones
+#sudo firewall-cmd  --list-all-zones
+#firewall-cmd --get-active-zone
+#firewall-cmd --permanent --add-service=ftp
+#firewall-cmd --permanent --zone=trusted  --add-service=ftp
+#sudo firewall-cmd  --list-all-zones
+#firewall-cmd --permanent --zone=trusted  --add-service=ftp
+#sudo firewall-cmd  --list-all-zones
+#firewall-cmd --permanent --zone=trusted  --add-service=ftp
+#firewall-cmd --reload
+#sudo firewall-cmd  --list-all-zones
+#firewall-cmd --set-default-zone=trusted
+#firewall-cmd --reload
+#sudo firewall-cmd  --list-all-zones
+
+-작업 이후 zone=trust 를 보안상 이유로 internal 로 변경
+-----
+
+
+##bootstrap-install 
+-----
+coreos=inst
+coreos.inst.install_dev-sda 
+coreos.inst.image_url=ftp://10.0.xxx.xxx/pub/rhcos4-3-3.raw.gz
+coreos.inst.ignition_url=ftp://10.0.xxx.xxx/pub/bootstrap.ign
+ip=10.0.xxx.xxx::10.0.xxx.1:ocp4-3.fu.te:ens192:none nameserver=10.0.xxx.xxx
+-------
+
+##master-install
+-------
+
+##bootstrap-install 
+-----
+coreos=inst
+coreos.inst.install_dev-sda 
+coreos.inst.image_url=ftp://10.0.xxx.xxx/pub/rhcos4-3-3.raw.gz
+coreos.inst.ignition_url=ftp://10.0.xxx.xxx/pub/master01.ign
+ip=10.0.xxx.xxx::10.0.xxx.1:ocp4-3.fu.te:ens192:none nameserver=10.0.xxx.xxx
+-----
+
