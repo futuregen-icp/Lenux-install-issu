@@ -410,9 +410,9 @@ _etcd-server-ssl._tcp.ocp4-1.fu.te.  86400 IN    SRV 0        10     2380 etcd-0
 -해결 완료
 ```
 
-```
-##firewall 의 설정의 문제 
 
+##firewall 의 설정의 문제 
+```
 위의 firewall-cmd 의 명령어를 전부 복붙해버리면서 문제 발생
 
 1.현재 작업 중 필요한 firewall service 는 FTP,DNS,Haproxy 이다 위의 모든 설정을 다 구성X 
