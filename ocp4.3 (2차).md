@@ -1,11 +1,12 @@
 ## 노드 구성 정보 
-```
-Bootstrap	 RHCOS	            4	 16 GB	120 GB
-Control    plane	RHCOS	      4	 16 GB	120 GB
-Compute	   RHCOS or RHEL 7.6	2	 8 GB	  120 GB
+|nodename|OS|core|memory|storage|
+|--------|-------|------|-------|
+|Bootstrap|RHCOS|4|16 GB|120 GB|
+|Control|plane	RHCOS|4|16 GB|120 GB|
+|Compute|RHCOS or RHEL 7.6|2|8 GB|120 GB|
 
 -이번 작업에서는 worke node 구성x
-```
+
 ## IP구성정보
 ```
 bastion 10.0.XXX.XXX , 192.168.100.204
