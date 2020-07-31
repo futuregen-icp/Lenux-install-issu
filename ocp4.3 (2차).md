@@ -1,7 +1,7 @@
 ## 노드 구성 정보 
 
 |nodename|OS|core|memory|storage|
-|--------|-------|------|-------|
+|:--:|:--:|:--:|:--:|:--:|
 |Bootstrap|RHCOS|4|16 GB|120 GB|
 |Control|plane	RHCOS|4|16 GB|120 GB|
 |Compute|RHCOS or RHEL 7.6|2|8 GB|120 GB|
