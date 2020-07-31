@@ -1,4 +1,5 @@
 ## 노드 구성 정보 
+
 |nodename|OS|core|memory|storage|
 |--------|-------|------|-------|
 |Bootstrap|RHCOS|4|16 GB|120 GB|
