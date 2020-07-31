@@ -287,7 +287,7 @@ _etcd-server-ssl._tcp.ocp4-3.yg.te.  86400 IN    SRV 0        10     2380 etcd-2
 
 ```
 
-## named.rr 파일 구성
+## named.rr 파일 구성 (리버스 도메인)
 ```
 # vi /var/named/ocp4-3.yg.te.rr
 
@@ -357,10 +357,10 @@ frontend machine-config-server
 backend machine-config-server
     balance source
     mode tcp
-    server bootstrap 192.168.100.204:6443 check
-    server master01 192.168.100.206:6443 check
-    server master02 192.168.100.207:6443 check
-    server master03 192.168.100.208:6443 check
+    server bootstrap 192.168.100.204:22623 check
+    server master01 192.168.100.206:22623 check
+    server master02 192.168.100.207:22623 check
+    server master03 192.168.100.208:22623 check
 
 ##
 # balancing for OCP Ingress Insecure Port & Admin Page
@@ -390,9 +390,9 @@ backend ingress-https
     balance leastconn
 #    balance source
     mode tcp
-    server worker1 192.168.100.213:80 check
-    server worker1 192.168.100.214:80 check
-    server worker1 192.168.100.215:80 check
+    server worker1 192.168.100.213:443 check
+    server worker1 192.168.100.214:443 check
+    server worker1 192.168.100.215:443 check
 
 #---------------------------------------------------------------------
 # static backend for serving up images, stylesheets and such
