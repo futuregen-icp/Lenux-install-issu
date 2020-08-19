@@ -1,5 +1,5 @@
 ## ocp3.11 install
-```
+
 |nodename|OS|core|memory|storage|
 |:--:|:--:|:--:|:--:|:--:|
 |bastion|RHEL 7.6|8|16 GB|150 GB|
@@ -7,7 +7,7 @@
 |Controlplane|RHEL 7.6|8|16 GB|120 GB|
 |Compute|RHEL 7.6|8|16 GB|120 GB|
 
-```
+
 
 ## FQDN setting
 ```
