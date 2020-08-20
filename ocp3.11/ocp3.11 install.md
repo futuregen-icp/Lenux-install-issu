@@ -291,3 +291,20 @@ infra.ocp11.yg.te openshift_ip=10.0.10.226 openshift_public_ip=10.0.10.226 opens
 worker.ocp11.yg.te openshift_ip=10.0.10.228 openshift_public_ip=10.0.10.228 openshift_public_hostname=worker.ocp11.yg.te openshift_node_group_name='node-config-compute'
 
 ```
+
+## 사전점검
+```
+# cd /usr/share/ansible/openshift-ansible
+# ansible-playbook -i /opt/ocp11/hosts playbooks/prerequisites.yml
+```
+
+## playbook 실행 
+```
+# cd /usr/share/ansible/openshift-ansible
+# ansible-playbook -i /opt/ocp11/hosts playbooks/pre-install.yml
+```
+
+## copy the master node's KUBE/config file to bastion
+```
+@master# scp /root/.kube/config1 root@x.x.x.224 /opt/ocp11
+
