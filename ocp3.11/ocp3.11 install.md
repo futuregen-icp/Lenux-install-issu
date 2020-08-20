@@ -163,18 +163,18 @@ ssh-copy-id -i '/root/.ssh/id_rsa.pub' bastion.ocp11.yg.te
 ```
  cat /etc/ans
 [master]
-10.0.10.227
+x.x.x.227
 [infra]
-10.0.10.226
+x.x.x.226
 [node]
-10.0.10.228
+x.x.x.228
 [bastion]
-10.0.10.224
+x.x.x.224
 [OCP]
-10.0.10.224
-10.0.10.226
-10.0.10.227
-10.0.10.228
+x.x.x.224
+x.x.x.226
+x.x.x.227
+x.x.x.228
 ```
 ## host config
 ```
@@ -278,17 +278,17 @@ masters
 nodes
 
 [masters]
-master.ocp11.yg.te openshift_ip=10.0.10.227 openshift_public_ip=10.0.10.227 openshift_public_hostname=master.ocp11.yg.te
+master.ocp11.yg.te openshift_ip=x.x.x.227 openshift_public_ip=x.x.x.227 openshift_public_hostname=master.ocp11.yg.te
 
 [nodes]
 ## Master
-master.ocp11.yg.te openshift_ip=10.0.10.227 openshift_public_ip=10.0.10.227 openshift_public_hostname=master.ocp11.yg.te openshift_node_group_name='node-config-master'
+master.ocp11.yg.te openshift_ip=x.x.x.227 openshift_public_ip=x.x.x.227 openshift_public_hostname=master.ocp11.yg.te openshift_node_group_name='node-config-master'
 
 ### Infra
-infra.ocp11.yg.te openshift_ip=10.0.10.226 openshift_public_ip=10.0.10.226 openshift_public_hostname=infra.ocp11.yg.te openshift_node_group_name='node-config-infra'
+infra.ocp11.yg.te openshift_ip=x.x.x.226 openshift_public_ip=x.x.x.226 openshift_public_hostname=infra.ocp11.yg.te openshift_node_group_name='node-config-infra'
 
 ### Node
-worker.ocp11.yg.te openshift_ip=10.0.10.228 openshift_public_ip=10.0.10.228 openshift_public_hostname=worker.ocp11.yg.te openshift_node_group_name='node-config-compute'
+worker.ocp11.yg.te openshift_ip=x.x.x.228 openshift_public_ip=x.x.x.228 openshift_public_hostname=worker.ocp11.yg.te openshift_node_group_name='node-config-compute'
 
 ```
 
