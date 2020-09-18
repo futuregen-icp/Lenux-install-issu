@@ -1,25 +1,25 @@
 ## APM 설치 정보 
 ```
-###Mariadb info
+### Mariadb info
 
 mysql -V
 mysql  Ver 15.1 Distrib 10.4.14-MariaDB, for Linux (x86_64) using readline 5.1
 
-###apache info
+### apache info
 
 httpd -v
 Server version: Apache/2.4.6 (Red Hat Enterprise Linux)
 ```
 
-##yum version update 
+## yum version update 
 ```
  yum update 
 ```
-##필요 라이브러리 설치 
+## 필요 라이브러리 설치 
 ```
 yum install libjpeg* libpng* freetype* gd-* gcc gcc-c++ gdbm-devel libtermcap-devel
 
-###필요 도구 설치
+### 필요 도구 설치
  yum -y install net-tool psmisc 
 
 APM install 
@@ -29,7 +29,7 @@ Apache - mariadb - php 순서로 진행
 yum inatall httpd -y
 ```
 
-##MariaDB 설치
+## MariaDB 설치
 ```
 10버전의 MariaDB를 설치하기 위해서는 repo 설정을 먼저 진행해야 한다.
 
@@ -46,7 +46,7 @@ gpgkey=https://yum.mariadb.org/RPM-GPG-KEY-MariaDB
 gpgcheck=1
 ```
 
-##MariaDB 설치
+## MariaDB 설치
 ```
 yum install MariaDB-server MariaDB-client
 
@@ -58,7 +58,7 @@ cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
 ```
 
 
-##설치 파일 확인 
+## 설치 파일 확인 
 rpm -qa httpd mysql php
 
 Yum으로 설치할경우 httpd 기본환경설정 경로는
@@ -78,7 +78,7 @@ root 권한으로 실행된 아파치의 하위 프로세스를 이곳에서 지
  ex) ServerName [ 192.168.119.132:80 ]
 ```
 
-##firewalld 설정 
+## firewalld 설정 
 ```
 firewall-cmd --permanent --zone=public --add-port=80/tcp
 firewall-cmd --permanent --zone=public --add-port=3306/tcp
@@ -88,13 +88,13 @@ firewall-cmd --permanent --zone=public --add-port=139/tcp
 firewall-cmd --reload
 ```
 
-##hpptd 실행 
+## hpptd 실행 
 ```
 systemctl start httpd
 systemctl enable httpd
 ```
 
-##체크
+## 체크
 
 ###port LISTEN 확인
 ```
@@ -130,7 +130,7 @@ public (active)
 
 
  
-##PHP 설정 
+## PHP 설정 
 ```
 vi /etc/httpd/conf/httpd.conf
 --------------
@@ -154,7 +154,7 @@ vi /etc/httpd/conf/httpd.conf
   AddType application/X-hrttpd-php-source .phps            >>>추가
 --------------
 
-###테스트 페이지 작성
+### 테스트 페이지 작성
 
 html 업로드 기본 디렉토리는 /var/www/html/ 
 
@@ -168,7 +168,7 @@ html 업로드 기본 디렉토리는 /var/www/html/
 --------------
  ```
 
-###apache 재시작
+### apache 재시작
  ```
  -------------
  systmectl restart httpd
@@ -178,7 +178,7 @@ html 업로드 기본 디렉토리는 /var/www/html/
  에러메세지가 뜰것
 ```
 
-###에러 발생시
+### 에러 발생시
 ```
 find / -name php.ini  경로 확인
 
@@ -221,7 +221,7 @@ http:// server IP/phpinfo.php
 php information  화면이 나오면 성공
 ```
 
-##mysql 확인 
+## mysql 확인 
 ```
 mywql -p root -u
 
