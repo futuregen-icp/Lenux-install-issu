@@ -59,6 +59,7 @@ cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysqld
 
 
 ## 설치 파일 확인 
+```
 rpm -qa httpd mysql php
 
 Yum으로 설치할경우 httpd 기본환경설정 경로는
